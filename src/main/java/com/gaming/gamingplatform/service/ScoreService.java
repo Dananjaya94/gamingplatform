@@ -19,8 +19,7 @@ public class ScoreService {
     }
 
     public List<Score> getHighestScores(Long userId) {
-        // Implement your logic to get the highest scores for the given userId
-        return null;
+        return scoreRepository.findAllScoresByUserId(userId);
     }
 
     public Score updateScore(Long id, Score updatedScore) {
