@@ -4,3 +4,6 @@ Please refer to the following table structure if needed and note down any assump
 It is enough to have the following details in the main 2 entities :
 user → id, username, email
 game → id, name, description
+
+Refer to following link for front-end project
+https://github.com/Dananjaya94/gaming-platform-frontend.git
