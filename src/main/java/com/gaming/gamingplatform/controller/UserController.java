@@ -2,12 +2,15 @@ package com.gaming.gamingplatform.controller;
 
 import com.gaming.gamingplatform.dto.User;
 import com.gaming.gamingplatform.service.UserService;
+import com.gaming.gamingplatform.security.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -17,6 +20,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private JwtUtil jwtUtil;
 
     @PostMapping("/adduser")
     public User addUser(@RequestBody User user) {
@@ -56,11 +62,16 @@ public class UserController {
         Optional<User> user = userService.loginUser(loginRequest.getUsername(), loginRequest.getPassword());
 
         if (user.isPresent()) {
-            return ResponseEntity.ok(user.get());
+            String token = jwtUtil.generateToken(user.get().getUsername());
+
+            Map<String, Object> response = new HashMap<>();
+            response.put("user", user.get());
+            response.put("token", token);
+
+            return ResponseEntity.ok(response);
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password");
         }
     }
 
 }
-
