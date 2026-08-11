@@ -1,5 +1,6 @@
 package com.gaming.gamingplatform.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -18,6 +19,9 @@ public class User {
 
         private String username;
         private String email;
+
+        @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+        private String password;
 
         @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, orphanRemoval = true)
         @JsonIgnore
