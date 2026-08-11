@@ -2,9 +2,13 @@ package com.gaming.gamingplatform.dto;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.util.List;
 
 @Entity
-@Table(name = "user") // Ensure the table name matches your database
+@Table(name = "users")
 @Data
 public class User {
 
@@ -15,5 +19,9 @@ public class User {
         private String username;
         private String email;
 
-        // Other fields, getters, and setters
+        @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, orphanRemoval = true)
+        @JsonIgnore
+        @ToString.Exclude
+        @EqualsAndHashCode.Exclude
+        private List<Score> scores;
 }

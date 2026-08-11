@@ -2,6 +2,10 @@ package com.gaming.gamingplatform.dto;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.util.List;
 
 
 @Entity
@@ -16,5 +20,10 @@ public class Game {
     private String name;
     private String description;
 
-    // Other fields, getters, and setters
+    // Automatically delete scores when this game is deleted
+    @OneToMany(mappedBy = "game", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @JsonIgnore
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private List<Score> scores;
 }
